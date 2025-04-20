@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dự đoán béo phì với SVC</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 0; 
+            background: #f7f7f7;
+        }
+        .container {
+            max-width: 420px;
+            margin: 60px auto 0 auto;
+            background: #fff;
+            padding: 32px 32px 24px 32px;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 2rem;
+            color: #222;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            display: block;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #4a90e2;
+            font-size: 1rem;
+            width: 100%;
+            text-align: left;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 2px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border 0.2s, box-shadow 0.2s;
+            margin-left: 0;
+            box-shadow: 0 2px 8px rgba(74,144,226,0.08);
+            background: #fff;
+        }
+        select:focus, input[type="text"]:focus {
+            border: 1.5px solid #4a90e2;
+            outline: none;
+            box-shadow: 0 2px 12px rgba(74,144,226,0.18);
+        }
+        select option[disabled][hidden] {
+            color: #b0b0b0 !important;
+        }
+        select option.placeholder {
+            color: #b0b0b0 !important;
+        }
+        input[type="submit"] {
+            margin-top: 22px;
+            width: 100%;
+            padding: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background: #4a90e2;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(74,144,226,0.12);
+        }
+        input[type="submit"]:hover {
+            background: #357abd;
+        }
+        .result {
+            margin-top: 24px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nhập thông tin để dự đoán</h2>
+        <form method="post">
+            {% for field in fields %}
+                <label>{{ field }}:</label>
+                <select name="{{ field }}">
+                    <option value="" disabled selected hidden class="placeholder">--Chọn hoặc để trống (mặc định)--</option>
+                    {% for opt in options[field] %}
+                        <option value="{{ opt }}" {% if default_values[field]|lower == opt %}selected{% endif %}>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            {% endfor %}
+            <input type="submit" value="Dự đoán">
+        </form>
+        <div class="result"></div> <!-- Đảm bảo phần tử này luôn tồn tại -->
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const resultDiv = document.querySelector(".result");
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn reload trang
+
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+
+                fetch("{{ url_for('index') }}", { // Sử dụng url_for để tạo URL
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.result) {
+                            resultDiv.textContent = data.result;
+                            resultDiv.style.color = "green";
+                        } else {
+                            resultDiv.textContent = "Có lỗi xảy ra!";
+                            resultDiv.style.color = "red";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        resultDiv.textContent = "Có lỗi xảy ra!";
+                        resultDiv.style.color = "red";
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

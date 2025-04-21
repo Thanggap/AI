@@ -3,10 +3,31 @@
 <head>
     <title>Dự đoán béo phì với SVC</title>
     <style>
-        body { 
-            font-family: Arial; 
-            margin: 0; 
-            background: #f7f7f7;
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #ffffff; /* Nền trắng */
+            overflow: auto; /* Ẩn các phần tử vượt ra ngoài màn hình */
+            position: relative;
+        }
+    
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(74, 144, 226, 0.2); /* Màu xanh nhạt với độ mờ */
+            animation: move 20s linear infinite;
+        }
+    
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-50px) translateX(50px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
         }
         .container {
             max-width: 420px;
@@ -87,18 +108,24 @@
             text-align: center;
             font-size: 18px;
         }
+
     </style>
 </head>
+
 <body>
+    <div class="circle" style="width: 100px; height: 100px; top: 10%; left: 20%;"></div>
+    <div class="circle" style="width: 150px; height: 150px; top: 30%; left: 50%;"></div>
+    <div class="circle" style="width: 80px; height: 80px; top: 60%; left: 70%;"></div>
+    <div class="circle" style="width: 120px; height: 120px; top: 80%; left: 30%;"></div>
     <div class="container">
         <h2>Nhập thông tin để dự đoán</h2>
         <form method="post">
             {% for field in fields %}
                 <label>{{ field }}:</label>
                 <select name="{{ field }}">
-                    <option value="" disabled selected hidden class="placeholder">--Chọn hoặc để trống (mặc định)--</option>
+                    <option value="" disabled selected hidden class="placeholder">--Chọn hoặc để trống--</option>
                     {% for opt in options[field] %}
-                        <option value="{{ opt }}" {% if default_values[field]|lower == opt %}selected{% endif %}>{{ opt }}</option>
+                        <option value="{{ opt }}">{{ opt }}</option>
                     {% endfor %}
                 </select>
             {% endfor %}

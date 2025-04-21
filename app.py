@@ -6,9 +6,9 @@ import joblib
 app = Flask(__name__)
 # Mapping tên hiển thị sang tên cột chuẩn
 display_to_column = {
-    "Sex": "Sex",
-    "Age": "Age",
-    "Height": "Height",
+    "Giới tính": "Sex",
+    "Age": "Tuổi",
+    "Height": "Chiều cao",
     "Overweight/Obese Families": "Overweight_Obese_Family",
     "Consumption of Fast Food": "Consumption_of_Fast_Food",
     "Frequency of Consuming Vegetables": "Frequency_of_Consuming_Vegetables",
@@ -35,20 +35,20 @@ fields = [
 ]
 
 default_values = {
-    "Sex": "Male",
-    "Age": "36",
-    "Height": "171",
-    "Overweight/Obese Families": "No",
-    "Consumption of Fast Food": "No",
-    "Frequency of Consuming Vegetables": "Sometimes",
-    "Number of Main Meals Daily": "3",
-    "Food Intake Between Meals": "Sometimes",
-    "Smoking": "No",
-    "Liquid Intake Daily": "within the range of 1 to 2 liters",
-    "Calculation of Calorie Intake": "No",
-    "Physical Excercise": "in the range of 3-4 days",
-    "Schedule Dedicated to Technology": "between 3 and 5 hours",
-    "Type of Transportation Used": "Bike"
+   "Sex": "",
+    "Age": "",
+    "Height": "",
+    "Overweight/Obese Families": "",
+    "Consumption of Fast Food": "",
+    "Frequency of Consuming Vegetables": "",
+    "Number of Main Meals Daily": "",
+    "Food Intake Between Meals": "",
+    "Smoking": "",
+    "Liquid Intake Daily": "",
+    "Calculation of Calorie Intake": "",
+    "Physical Excercise": "",
+    "Schedule Dedicated to Technology": "",
+    "Type of Transportation Used": ""
 }
 
 def reverse_mapping(field):

@@ -1,176 +1,234 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Dự đoán béo phì với SVC</title>
     <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #ffffff; /* Nền trắng */
-            overflow: auto; /* Ẩn các phần tử vượt ra ngoài màn hình */
-            position: relative;
-        }
-    
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(74, 144, 226, 0.2); /* Màu xanh nhạt với độ mờ */
-            animation: move 20s linear infinite;
-        }
-    
-        @keyframes move {
-            0% {
-                transform: translateY(0) translateX(0);
-            }
-            50% {
-                transform: translateY(-50px) translateX(50px);
-            }
-            100% {
-                transform: translateY(0) translateX(0);
-            }
-        }
-        .container {
-            max-width: 420px;
-            margin: 60px auto 0 auto;
-            background: #fff;
-            padding: 32px 32px 24px 32px;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 32px;
-            font-size: 2rem;
-            color: #222;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        label {
-            display: block;
-            margin-top: 16px;
-            margin-bottom: 6px;
-            font-weight: 500;
-            color: #4a90e2;
-            font-size: 1rem;
-            width: 100%;
-            text-align: left;
-        }
-        select, input[type="text"] {
-            width: 100%;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-bottom: 2px;
-            font-size: 15px;
-            box-sizing: border-box;
-            transition: border 0.2s, box-shadow 0.2s;
-            margin-left: 0;
-            box-shadow: 0 2px 8px rgba(74,144,226,0.08);
-            background: #fff;
-        }
-        select:focus, input[type="text"]:focus {
-            border: 1.5px solid #4a90e2;
-            outline: none;
-            box-shadow: 0 2px 12px rgba(74,144,226,0.18);
-        }
-        select option[disabled][hidden] {
-            color: #b0b0b0 !important;
-        }
-        select option.placeholder {
-            color: #b0b0b0 !important;
-        }
-        input[type="submit"] {
-            margin-top: 22px;
-            width: 100%;
-            padding: 10px 0;
-            border-radius: 8px;
-            border: none;
-            background: #4a90e2;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-            box-shadow: 0 2px 8px rgba(74,144,226,0.12);
-        }
-        input[type="submit"]:hover {
-            background: #357abd;
-        }
-        .result {
-            margin-top: 24px;
-            font-weight: bold;
-            color: green;
-            text-align: center;
-            font-size: 18px;
-        }
+      body {
+        font-family: Arial;
+        margin: 0;
+        background: #ffffff; /* Nền trắng */
+        overflow: auto; /* Ẩn các phần tử vượt ra ngoài màn hình */
+        position: relative;
+      }
 
+      .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(74, 144, 226, 0.2); /* Màu xanh nhạt với độ mờ */
+        animation: move 20s linear infinite;
+      }
+
+      @keyframes move {
+        0% {
+          transform: translateY(0) translateX(0);
+        }
+        50% {
+          transform: translateY(-50px) translateX(50px);
+        }
+        100% {
+          transform: translateY(0) translateX(0);
+        }
+      }
+      .container {
+        max-width: 420px;
+        margin: 60px auto 0 auto;
+        background: #fff;
+        padding: 32px 32px 24px 32px;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 32px;
+        font-size: 2rem;
+        color: #222;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      label {
+        display: block;
+        margin-top: 16px;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #4a90e2;
+        font-size: 1rem;
+        width: 100%;
+        text-align: left;
+      }
+      select,
+      input[type="text"] {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 2px;
+        font-size: 15px;
+        box-sizing: border-box;
+        transition: border 0.2s, box-shadow 0.2s;
+        margin-left: 0;
+        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.08);
+        background: #fff;
+       
+      }
+      select:focus,
+      input[type="text"]:focus {
+        border: 1.5px solid #4a90e2;
+        border-radius: 10px;
+        outline: none;
+        box-shadow: 0 2px 12px rgba(74, 144, 226, 0.18);
+      }
+      
+      select option[disabled][hidden] {
+        color: #b0b0b0 !important;
+        border-radius: 8px;
+      }
+      select option.placeholder {
+        color: #b0b0b0 !important;
+        border-radius: 8px;
+      }
+      input[type="submit"] {
+        margin-top: 22px;
+        width: 100%;
+        padding: 10px 0;
+        border-radius: 8px;
+        border: none;
+        background: #4a90e2;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.12);
+      }
+      input[type="submit"]:hover {
+        background: #357abd;
+      }
+      .result {
+        margin-top: 24px;
+        font-weight: bold;
+        color: green;
+        text-align: center;
+        font-size: 18px;
+      }
+      input[type="text"]:focus {
+        border-radius: 8px !important;
+        border: 3px solid;
+        border-image-slice: 1;
+        border-width: 2px;
+        border-image-source: linear-gradient(90deg, #4a90e2, #ff6f61);
+        animation: gradient-border 2s infinite;
+        outline: none;
+      }
+      select:focus {
+        border: 3px solid;
+        border-image-slice: 1;
+        
+        border-width: 3px;
+        border-image-source: linear-gradient(90deg, #4a90e2, #ff6f61);
+        animation: gradient-border 2s infinite;
+        outline: none;
+      }
+     
+      @keyframes gradient-border {
+        0% {
+          border-image-source: linear-gradient(90deg, #4a90e2, #ff6f61);
+        }
+        50% {
+          border-image-source: linear-gradient(90deg, #ff6f61, #4a90e2);
+        }
+        100% {
+          border-image-source: linear-gradient(90deg, #4a90e2, #ff6f61);
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div class="circle" style="width: 100px; height: 100px; top: 10%; left: 20%;"></div>
-    <div class="circle" style="width: 150px; height: 150px; top: 30%; left: 50%;"></div>
-    <div class="circle" style="width: 80px; height: 80px; top: 60%; left: 70%;"></div>
-    <div class="circle" style="width: 120px; height: 120px; top: 80%; left: 30%;"></div>
+  <body>
+    <div
+      class="circle"
+      style="width: 100px; height: 100px; top: 10%; left: 20%"
+    ></div>
+    <div
+      class="circle"
+      style="width: 150px; height: 150px; top: 30%; left: 50%"
+    ></div>
+    <div
+      class="circle"
+      style="width: 80px; height: 80px; top: 60%; left: 70%"
+    ></div>
+    <div
+      class="circle"
+      style="width: 120px; height: 120px; top: 80%; left: 30%"
+    ></div>
     <div class="container">
-        <h2>Enter information to predict</h2>
-        <form method="post">
-            {% for field in fields %}
-                <label>{{ field }}:</label>
-                <select name="{{ field }}">
-                    <option value="" disabled selected hidden class="placeholder">--Select or leave blank--</option>
-                    {% for opt in options[field] %}
-                        <option value="{{ opt }}">{{ opt }}</option>
-                    {% endfor %}
-                </select>
-            {% endfor %}
-            <input type="submit" value="Predict">
-        </form>
-        <div class="result"></div> <!-- Đảm bảo phần tử này luôn tồn tại -->
+      <h2>Enter information to predict</h2>
+      <form method="post">
+        {% for field in fields %}
+        <label>{{ field }}:</label>
+        {% if field == "Age" %}
+        <input type="text" name="{{ field }}" placeholder="Enter Age" />
+        {% elif field == "Height" %}
+        <input type="text" name="{{ field }}" placeholder="Enter Height(cm)" />
+        {% else %}
+        <select name="{{ field }}">
+          <option value="" disabled selected hidden class="placeholder">
+            --Select or leave blank--
+          </option>
+          {% for opt in options[field] %}
+          <option value="{{ opt }}">{{ opt }}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+        {% endfor %}
+        <input type="submit" value="Predict" />
+      </form>
+      <div class="result"></div>
+      <!-- Đảm bảo phần tử này luôn tồn tại -->
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-            const resultDiv = document.querySelector(".result");
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const resultDiv = document.querySelector(".result");
 
-            form.addEventListener("submit", function (event) {
-                event.preventDefault(); // Ngăn reload trang
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Ngăn reload trang
 
-                const formData = new FormData(form);
-                const data = {};
-                formData.forEach((value, key) => {
-                    data[key] = value;
-                });
+          const formData = new FormData(form);
+          const data = {};
+          formData.forEach((value, key) => {
+            data[key] = value;
+          });
 
-                fetch("{{ url_for('index') }}", { // Sử dụng url_for để tạo URL
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.result) {
-                            resultDiv.textContent = data.result;
-                            resultDiv.style.color = "green";
-                        } else {
-                            resultDiv.textContent = "An error occurred!";
-                            resultDiv.style.color = "red";
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error:", error);
-                        resultDiv.textContent = "An error occurred!";
-                        resultDiv.style.color = "red";
-                    });
+          fetch("{{ url_for('index') }}", {
+            // Sử dụng url_for để tạo URL
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.result) {
+                resultDiv.textContent = data.result;
+                resultDiv.style.color = "green";
+              } else {
+                resultDiv.textContent = "An error occurred!";
+                resultDiv.style.color = "red";
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              resultDiv.textContent = "An error occurred!";
+              resultDiv.style.color = "red";
             });
         });
+      });
     </script>
-</body>
+  </body>
 </html>

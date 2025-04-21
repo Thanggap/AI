@@ -118,18 +118,18 @@
     <div class="circle" style="width: 80px; height: 80px; top: 60%; left: 70%;"></div>
     <div class="circle" style="width: 120px; height: 120px; top: 80%; left: 30%;"></div>
     <div class="container">
-        <h2>Nhập thông tin để dự đoán</h2>
+        <h2>Enter information to predict</h2>
         <form method="post">
             {% for field in fields %}
                 <label>{{ field }}:</label>
                 <select name="{{ field }}">
-                    <option value="" disabled selected hidden class="placeholder">--Chọn hoặc để trống--</option>
+                    <option value="" disabled selected hidden class="placeholder">--Select or leave blank--</option>
                     {% for opt in options[field] %}
                         <option value="{{ opt }}">{{ opt }}</option>
                     {% endfor %}
                 </select>
             {% endfor %}
-            <input type="submit" value="Dự đoán">
+            <input type="submit" value="Predict">
         </form>
         <div class="result"></div> <!-- Đảm bảo phần tử này luôn tồn tại -->
     </div>
@@ -160,13 +160,13 @@
                             resultDiv.textContent = data.result;
                             resultDiv.style.color = "green";
                         } else {
-                            resultDiv.textContent = "Có lỗi xảy ra!";
+                            resultDiv.textContent = "An error occurred!";
                             resultDiv.style.color = "red";
                         }
                     })
                     .catch((error) => {
                         console.error("Error:", error);
-                        resultDiv.textContent = "Có lỗi xảy ra!";
+                        resultDiv.textContent = "An error occurred!";
                         resultDiv.style.color = "red";
                     });
             });

@@ -6,9 +6,9 @@ import joblib
 app = Flask(__name__)
 # Mapping tên hiển thị sang tên cột chuẩn
 display_to_column = {
-    "Giới tính": "Sex",
-    "Age": "Tuổi",
-    "Height": "Chiều cao",
+    "Sex": "Sex",
+    "Age": "Age",
+    "Height": "Height",
     "Overweight/Obese Families": "Overweight_Obese_Family",
     "Consumption of Fast Food": "Consumption_of_Fast_Food",
     "Frequency of Consuming Vegetables": "Frequency_of_Consuming_Vegetables",
@@ -78,7 +78,7 @@ def index():
             input_df = input_df[[display_to_column[f] for f in fields]]
             input_scaled = scaler.transform(input_df)
             pred = svc.predict(input_scaled)[0]
-            result = f"Kết quả dự đoán: {pred} - {class_mapping[str(pred)]}"
+            result = f"Predicted results: {pred} - {class_mapping[str(pred)]}"
             return {"result": result}  # Trả về JSON
         else:
             # Xử lý form thông thường
